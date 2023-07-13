@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plisio_invoice_status_undefined_description">Processing…</string>
+    <string name="plisio_invoice_status_new_description">Awaiting payment…</string>
+    <string name="plisio_invoice_status_pending_description">Awaiting confirmation…</string>
+    <string name="plisio_invoice_status_pending_internal_description">Processing…</string>
+    <string name="plisio_invoice_status_expired_description">The order has expired</string>
+    <string name="plisio_invoice_status_completed_description">Payment completed</string>
+    <string name="plisio_invoice_status_mismatch_description">The order has been overpaid</string>
+    <string name="plisio_invoice_status_error_description">Payment error</string>
+    <string name="plisio_invoice_status_cancelled_description">The order has been cancelled</string>
+    <string name="plisio_invoice_status_cancelled_duplicate_description">Loading…</string>
+</resources>

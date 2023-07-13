@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="plisio_primary">#4574EB</color>
+    <color name="plisio_secondary">#5C45EB</color>
+    <color name="plisio_light">#FFFFFF</color>
+    <color name="plisio_dark">#2B2D31</color>
+</resources>

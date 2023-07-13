@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plisio_payment_button_text">Pay with Plisio</string>
+
+    <string name="plisio_payment_sheet_action_initial_no_invoice">No invoice loaded</string>
+
+    <string name="plisio_payment_sheet_action_close">Close</string>
+    <string name="plisio_payment_sheet_action_continue">Continue</string>
+    <string name="plisio_payment_sheet_toast_amount_copied">Amount has been copied to clipboard</string>
+    <string name="plisio_payment_sheet_toast_wallet_copied">Wallet address has been copied to clipboard</string>
+
+    <string name="plisio_payment_sheet_email_title">Enter your E-mail</string>
+    <string name="plisio_payment_sheet_email_text">You will receive payment confirmation on your e-mail</string>
+    <string name="plisio_payment_sheet_email_placeholder">name@example.com</string>
+
+    <string name="plisio_payment_sheet_currency_title">Choose Currency</string>
+    <string name="plisio_payment_sheet_currency_text">Choose one of the available currencies to complete your payment</string>
+
+    <string name="plisio_payment_sheet_payment_text">Send %s to the address below to complete your payment</string>
+    <string name="plisio_payment_sheet_payment_text_partial">We have received %1$s\nSend %2$s more to the address below to complete your payment</string>
+    <string name="plisio_payment_sheet_payment_action_copy_wallet">Copy wallet</string>
+    <string name="plisio_payment_sheet_payment_action_copy_amount">Copy amount</string>
+
+    <string name="plisio_payment_sheet_confirmation_title">Payment received, waiting for confirmation</string>
+    <string name="plisio_payment_sheet_confirmation_text">Please wait until network confirms your payment\nIt usually takes 15 to 60 minutes</string>
+    <string name="plisio_payment_sheet_confirmation_action_open_transaction">Check transaction</string>
+    <string name="plisio_payment_sheet_confirmation_action_notify">Notify me</string>
+
+    <string name="plisio_payment_sheet_completion_title">Payment has been completed</string>
+    <string name="plisio_payment_sheet_completion_text">Now you can go back to the app</string>
+    <string name="plisio_payment_sheet_completion_title_partial">The order has not been fully paid</string>
+    <string name="plisio_payment_sheet_completion_text_partial">We have received %1$s of %2$s required\nPlease contact the store to get your payment back</string>
+    <string name="plisio_payment_sheet_completion_title_expired">The order has expired</string>
+    <string name="plisio_payment_sheet_completion_text_expired">Please go back to the app and create a new one</string>
+    <string name="plisio_payment_sheet_completion_title_overpaid">The order has been overpaid</string>
+    <string name="plisio_payment_sheet_completion_text_overpaid">You have paid %s which is more than required\nPlease contact the store in case of inconvenience</string>
+    <string name="plisio_payment_sheet_completion_title_error">Order error</string>
+    <string name="plisio_payment_sheet_completion_text_error">Please go back to the app and create a new one</string>
+    <string name="plisio_payment_sheet_completion_action_dismiss">Return to the app</string>
+
+    <string name="plisio_payment_sheet_error_title_message">Error</string>
+    <string name="plisio_payment_sheet_error_title_response">Response</string>
+    <string name="plisio_payment_sheet_error_action_copy">Copy</string>
+    <string name="plisio_payment_sheet_error_toast_copied_message">Error message has been copied to clipboard</string>
+    <string name="plisio_payment_sheet_error_toast_copied_response">Response has been copied to clipboard</string>
+</resources>
