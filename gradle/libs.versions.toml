@@ -11,9 +11,9 @@ appcompat = "1.6.1"
 activity-compose = "1.7.2"
 compose = "1.4.3"
 compose-foundation = "1.6.1"
-compose-material = "1.6.1"
+compose-material = "1.4.3"
 compose-compiler = "1.4.8"
-coil = "2.5.0"
+coil = "2.4.0"
 qrcode = "3.3.0"
 
 [libraries]
