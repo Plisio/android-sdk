@@ -9,6 +9,11 @@ plugins {
 android {
     namespace = "net.plisio.sdk"
     compileSdk = 34
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
     defaultConfig {
         minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
