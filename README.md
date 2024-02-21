@@ -18,9 +18,9 @@ repositories {
 
 dependencies {
     // Plisio UI Compose - prebuilt UI made with Jetpack Compose
-    implementation("net.plisio.android-sdk:ui-compose:1.0.0")
+    implementation("com.github.BadKiko.plisio-android-sdk:ui-compose:0.0.9")
     // Plisio SDK - API only without a prebuilt UI
-    implementation("net.plisio.android-sdk:sdk:1.0.0")
+    implementation("com.github.BadKiko.plisio-android-sdk:sdk:0.0.9")
 }
 ```
 
