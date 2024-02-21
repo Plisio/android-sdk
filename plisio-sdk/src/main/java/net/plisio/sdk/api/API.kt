@@ -106,6 +106,28 @@ internal class PlisioAPI(
         }.map(InvoiceResponse::invoiceDetails)
     }
 
+    internal suspend fun createNewInvoice(
+        api_key: String,
+        currency: String,
+        source_currency: String,
+        source_amount: String,
+        allowed_psys_cids: String,
+        order_name: String,
+        order_number: String,
+        expire_min: String
+    ): Result<InvoiceData> {
+        return request<NewInvoiceResponse>("invoices/new") {
+            parameter("api_key", api_key)
+            parameter("currency", currency)
+            parameter("source_currency", source_currency)
+            parameter("source_amount", source_amount)
+            parameter("allowed_psys_cids", allowed_psys_cids)
+            parameter("order_name", order_name)
+            parameter("order_number", order_number)
+            parameter("expire_min", expire_min)
+        }.map(NewInvoiceResponse::data)
+    }
+
     internal suspend fun setUserEmail(
         email: String,
         id: PlisioInvoiceID,
