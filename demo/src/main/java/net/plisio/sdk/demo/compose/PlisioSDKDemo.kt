@@ -23,10 +23,12 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -34,6 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import net.plisio.sdk.PlisioClient
 import net.plisio.sdk.ui.compose.PlisioPaymentButton
 import net.plisio.sdk.ui.compose.PlisioPaymentSheet
 import net.plisio.sdk.ui.compose.plisioPaymentViewModel
@@ -41,6 +45,7 @@ import net.plisio.sdk.ui.compose.style.LocalPlisioStyle
 import net.plisio.sdk.ui.compose.style.PlisioColor
 import net.plisio.sdk.ui.compose.style.PlisioStyle
 import net.plisio.sdk.ui.compose.style.contrastingColorFor
+import java.util.UUID
 import kotlin.random.Random
 
 @Composable

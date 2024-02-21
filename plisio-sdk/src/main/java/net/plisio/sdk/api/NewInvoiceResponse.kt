@@ -11,7 +11,7 @@ data class NewInvoiceResponse(
 )
 @Serializable
 data class InvoiceData(
-    @SerialName("actual_fee") val actualFee: String,
+    @SerialName("actual_fee") val actualFee: String? = null,
     val amount: String,
     @SerialName("created_at_utc") val createdAtUtc: Int,
     @SerialName("created_utc") val createdUtc: Int,
@@ -25,7 +25,7 @@ data class InvoiceData(
     @SerialName("invoice_sum") val invoiceSum: String,
     @SerialName("invoice_total_sum") val invoiceTotalSum: String,
     @SerialName("invoice_url") val invoiceUrl: String,
-    @SerialName("paid_id") val paidId: String,
+    @SerialName("paid_id") val paidId: String? = null,
     val params: InvoiceParams,
     @SerialName("pending_amount") val pendingAmount: String,
     @SerialName("psys_cid") val psysCid: String,
@@ -37,10 +37,10 @@ data class InvoiceData(
     @SerialName("source_rate") val sourceRate: String,
     val status: String,
     @SerialName("status_code") val statusCode: Int,
-    @SerialName("switch_id") val switchId: String,
-    val tx: List<String>,
-    @SerialName("tx_id") val txId: String,
-    @SerialName("tx_url") val txUrl: String,
+    @SerialName("switch_id") val switchId: String? = null,
+    val tx: List<String?>? = null,
+    @SerialName("tx_id") val txId: String? = null,
+    @SerialName("tx_url") val txUrl: String? = null,
     @SerialName("txn_id") val txnId: String,
     val type: String,
     @SerialName("verify_hash") val verifyHash: String,

@@ -20,6 +20,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -37,11 +38,13 @@ internal class PlisioAPI(
     private val additionalHeaders: Map<String, String>? = null
 ) {
     private val jsonSerializer = Json {
+        explicitNulls = false
+        prettyPrint = true
         isLenient = true
         ignoreUnknownKeys = true
-        coerceInputValues = true
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private val client = HttpClient(OkHttp) {
         expectSuccess = false
         defaultRequest {
@@ -52,7 +55,9 @@ internal class PlisioAPI(
             }
         }
         install(ContentNegotiation) {
-            json(jsonSerializer)
+            json(
+                jsonSerializer
+            )
         }
         install(Logging) {
             logger = Logger.SIMPLE
