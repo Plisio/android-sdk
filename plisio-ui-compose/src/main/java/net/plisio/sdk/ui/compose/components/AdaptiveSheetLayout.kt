@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.ElevationOverlay
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,6 +27,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Surface
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.rememberSwipeableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -114,49 +116,12 @@ internal fun AdaptiveSheetLayout(
                     }
                 )
 
-                // Compose update removed `ModalBottomSheetState.offset` and made `requireOffset()` internal, call it anyway
-                val sheetOffset by remember {
-                    derivedStateOf {
-                        @Suppress("INVISIBLE_MEMBER")
-                        sheetState.swipeableState.offset
-                    }
-                }
-                val currentSheetOffset = sheetOffset
-
-                val sheetShape = when (shape) {
-                    is CornerBasedShape -> {
-                        val density = LocalDensity.current
-                        val statusBarHeight = WindowInsets.statusBars.getTop(density)
-                        val cornerSizeLimit = if (currentSheetOffset != null && currentSheetOffset < statusBarHeight) {
-                            currentSheetOffset.coerceAtLeast(0f)
-                        } else null
-                        remember(shape, density, statusBarHeight, cornerSizeLimit) {
-                            when (cornerSizeLimit) {
-                                null -> shape.copy(
-                                    bottomStart = ZeroCornerSize,
-                                    bottomEnd = ZeroCornerSize
-                                )
-
-                                else -> shape.copy(
-                                    topStart = CornerSize(shape.topStart.toPx(Size.Unspecified, density).coerceAtMost(cornerSizeLimit)),
-                                    topEnd = CornerSize(shape.topEnd.toPx(Size.Unspecified, density).coerceAtMost(cornerSizeLimit)),
-                                    bottomStart = ZeroCornerSize,
-                                    bottomEnd = ZeroCornerSize
-                                )
-                            }
-                        }
-                    }
-
-                    else -> shape
-                }
-
                 ModalBottomSheetLayout(
                     sheetContent = {
                         CompositionLocalProvider(
                             LocalAdaptiveSheetLayoutState provides AdaptiveSheetLayoutState(
                                 isVisible = sheetState.targetValue == ModalBottomSheetValue.Expanded,
                                 sheetState = sheetState,
-                                sheetOffset = currentSheetOffset,
                                 hasVerticalSpace = hasVerticalSpace,
                                 maxHeight = maxAvailableHeight,
                                 mode = AdaptiveSheetLayoutState.Mode.Sheet
@@ -166,7 +131,7 @@ internal fun AdaptiveSheetLayout(
                         }
                     },
                     sheetState = sheetState,
-                    sheetShape = sheetShape,
+                    sheetShape = RoundedCornerShape(16.dp),
                     sheetElevation = elevation,
                     sheetBackgroundColor = backgroundColor,
                     sheetContentColor = contentColor,
