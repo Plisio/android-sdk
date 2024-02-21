@@ -10,7 +10,7 @@ android {
     namespace = "net.plisio.sdk"
     compileSdk = 34
     publishing {
-        singleVariant("release") {
+        multipleVariants {
             withSourcesJar()
         }
     }
