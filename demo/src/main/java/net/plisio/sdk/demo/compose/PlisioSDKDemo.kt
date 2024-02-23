@@ -33,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,8 @@ import kotlin.random.Random
 fun PlisioSDKDemo() {
     var invoiceID by remember { mutableStateOf(TextFieldValue("")) }
     var invoiceViewKey by remember { mutableStateOf(TextFieldValue("")) }
+
+    val context = LocalContext.current
 
     val paymentViewModel = plisioPaymentViewModel()
     val paymentStep by paymentViewModel.paymentStep.collectAsState()
@@ -143,9 +146,16 @@ fun PlisioSDKDemo() {
                         paymentStep = paymentStep,
                         style = PlisioStyle.PaymentButton.values()[paymentButtonStyle],
                         onClick = {
-                            paymentViewModel.loadInvoice(
-                                id = invoiceID.text,
-                                viewKey = invoiceViewKey.text
+                            paymentViewModel.newInvoice(
+                                context,
+                                "gffMLve_v5mAQ8wvOAdFHlTN1IQroWS_ZhGK3xX7cXjfouYAyYmxCC62DrPromlx",
+                                "BTC",
+                                "RUB",
+                                "400",
+                                "ETH,BTC,USDT_TRX,TRX",
+                                "Buy",
+                                UUID.randomUUID().toString(),
+                                30
                             )
                             isPaymentSheetVisible = true
                         },

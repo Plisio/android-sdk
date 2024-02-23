@@ -1,5 +1,6 @@
 package net.plisio.sdk.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -21,6 +22,7 @@ import net.plisio.sdk.models.PlisioInvoiceID
 import net.plisio.sdk.models.PlisioNotFoundError
 import net.plisio.sdk.uimodels.PlisioPaymentStep
 import net.plisio.sdk.uimodels.PlisioPaymentStepWithInvoice
+import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -59,6 +61,80 @@ class PlisioPaymentViewModel : ViewModel(), DefaultLifecycleObserver {
                 viewKey = viewKey,
                 loadImmediately = true
             )
+        }
+    }
+
+    fun newInvoice(
+        context: Context,
+        api_key: String,
+        currency: String,
+        source_currency: String,
+        source_amount: String,
+        allowed_psys_cids: String,
+        order_name: String,
+        order_number: String,
+        expire_min: Int
+    ) {
+        val sharedPrefs = context.getSharedPreferences("main", Context.MODE_PRIVATE)
+        val currentTimestamp = System.currentTimeMillis()
+
+        if (sharedPrefs.contains("paymentId") && sharedPrefs.contains("paymentViewKey") && sharedPrefs.getLong(
+                "endTimestamp",
+                Long.MAX_VALUE
+            ) >= currentTimestamp
+        ) {
+            loadInvoice(sharedPrefs.getString("paymentId", "") ?: "", sharedPrefs.getString("paymentViewKey", "") ?: "")
+        } else {
+            viewModelScope.launch {
+                update(
+                    state.copy(
+                        setUserEmailError = null,
+                        isLoading = true,
+                        error = null
+                    )
+                )
+
+                PlisioClient.getNewInvoice(
+                    api_key,
+                    currency,
+                    source_currency,
+                    source_amount,
+                    allowed_psys_cids,
+                    order_name,
+                    order_number,
+                    expire_min.toString()
+                )
+                    .onSuccess {
+                        val endTime = System.currentTimeMillis() + (expire_min * 60000)
+                        sharedPrefs.edit().putString("paymentId", it.id).putString("paymentViewKey", it.viewKey)
+                            .putLong("endTimestamp", endTime).apply()
+
+                        val invoiceID = PlisioInvoiceID(it.id)
+
+                        if (invoiceID == state.initialInvoiceID && it.viewKey == state.initialInvoiceViewKey) {
+                            startRefreshing(
+                                id = state.currentInvoiceID,
+                                viewKey = state.currentInvoiceViewKey,
+                                loadImmediately = true
+                            )
+                        } else {
+                            state = state.copy(
+                                initialInvoiceID = invoiceID,
+                                initialInvoiceViewKey = it.viewKey,
+                                currencySelected = false
+                            )
+                            startRefreshing(
+                                id = invoiceID,
+                                viewKey = it.viewKey,
+                                loadImmediately = true
+                            )
+                        }
+                    }.onFailure {
+                        state = state.copy(
+                            error(it)
+                        )
+                    }
+            }
         }
     }
 
