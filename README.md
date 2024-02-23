@@ -4,7 +4,7 @@
 
 Plisio Android SDK provides a subset of the [Plisio API](https://plisio.net/documentation) to implement payments for [White Label](https://plisio.net/white-label) invoices and customizable prebuilt UI components.
 
-**Plisio Android SDK only covers invoice payments in apps and requires `id` and `viewKey` of an invoice to work with.**
+**This is fork of SDK where added creating invoice with internal api**
 
 **Use [Plisio API](https://plisio.net/documentation) or one of the [Plisio server libraries](https://plisio.net/integrations) to create invoices and listen for callbacks on your server.**
 
@@ -33,14 +33,25 @@ fun Example() {
     val paymentViewModel = plisioPaymentViewModel()
     val paymentStep by paymentViewModel.paymentStep.collectAsState()
     var isPaymentSheetVisible by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
 
     // Optional, use a regular Button instead if you want to customize it
     PlisioPaymentButton(
         // Used to show a status indicator inside of the button
         paymentStep = paymentStep,
         onClick = {
-            // Load an invoice
-            paymentViewModel.loadInvoice(id = invoiceID, viewKey = invoiceViewKey)
+            // Load an new invoice
+            paymentViewModel.newInvoice(
+                                context,
+                                "gffMLve_v5mAQ8wvOAdFHlTN1IQroWS_ZhGK3xX7cXjfouYAyYmxCC62DrPromlx",
+                                "BTC",
+                                "RUB",
+                                "400",
+                                "ETH,BTC,USDT_TRX,TRX",
+                                "Buy",
+                                UUID.randomUUID().toString(),
+                                30
+                            )
             // Show the payment sheet
             isPaymentSheetVisible = true
         }
