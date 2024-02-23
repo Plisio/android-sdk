@@ -81,7 +81,7 @@ class PlisioPaymentViewModel : ViewModel(), DefaultLifecycleObserver {
         if (sharedPrefs.contains("paymentId") && sharedPrefs.contains("paymentViewKey") && sharedPrefs.getLong(
                 "endTimestamp",
                 Long.MAX_VALUE
-            ) >= currentTimestamp
+            ) >= currentTimestamp && sharedPrefs.getString("paymentAmount", "") == source_amount
         ) {
             loadInvoice(sharedPrefs.getString("paymentId", "") ?: "", sharedPrefs.getString("paymentViewKey", "") ?: "")
         } else {
@@ -93,6 +93,7 @@ class PlisioPaymentViewModel : ViewModel(), DefaultLifecycleObserver {
                         error = null
                     )
                 )
+
 
                 PlisioClient.getNewInvoice(
                     api_key,
@@ -106,7 +107,7 @@ class PlisioPaymentViewModel : ViewModel(), DefaultLifecycleObserver {
                 )
                     .onSuccess {
                         val endTime = System.currentTimeMillis() + (expire_min * 60000)
-                        sharedPrefs.edit().putString("paymentId", it.id).putString("paymentViewKey", it.viewKey)
+                        sharedPrefs.edit().putString("paymentId", it.id).putString("paymentAmount", source_amount).putString("paymentViewKey", it.viewKey)
                             .putLong("endTimestamp", endTime).apply()
 
                         val invoiceID = PlisioInvoiceID(it.id)
