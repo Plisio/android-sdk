@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ fun PlisioPaymentSheet(
     style: PlisioStyle = LocalPlisioStyle.current,
     shape: Shape = MaterialTheme.shapes.large,
     elevation: Dp = ModalBottomSheetDefaults.Elevation,
+    softwareKeyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     headerContent: @Composable (PlisioPaymentStep) -> Unit = { PlisioPaymentSheetHeader(paymentStep = it) },
     footerContent: @Composable (PlisioPaymentStep) -> Unit = {},
     content: @Composable (PlisioPaymentStep) -> Unit = { PlisioPaymentSheetContent(paymentStep = it) }
@@ -112,7 +114,6 @@ fun PlisioPaymentSheet(
         }
     }
 
-    val softwareKeyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     SideEffect {
         if (isVisible && paymentStep !is PlisioPaymentStep.UserEmail) {

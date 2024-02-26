@@ -20,6 +20,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -37,11 +38,13 @@ internal class PlisioAPI(
     private val additionalHeaders: Map<String, String>? = null
 ) {
     private val jsonSerializer = Json {
+        explicitNulls = false
+        prettyPrint = true
         isLenient = true
         ignoreUnknownKeys = true
-        coerceInputValues = true
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private val client = HttpClient(OkHttp) {
         expectSuccess = false
         defaultRequest {
@@ -52,7 +55,9 @@ internal class PlisioAPI(
             }
         }
         install(ContentNegotiation) {
-            json(jsonSerializer)
+            json(
+                jsonSerializer
+            )
         }
         install(Logging) {
             logger = Logger.SIMPLE
@@ -104,6 +109,28 @@ internal class PlisioAPI(
         return request<InvoiceResponse>("invoices/${id.id.trim()}") {
             parameter("view_key", viewKey.trim())
         }.map(InvoiceResponse::invoiceDetails)
+    }
+
+    internal suspend fun createNewInvoice(
+        api_key: String,
+        currency: String,
+        source_currency: String,
+        source_amount: String,
+        allowed_psys_cids: String,
+        order_name: String,
+        order_number: String,
+        expire_min: String
+    ): Result<InvoiceData> {
+        return request<NewInvoiceResponse>("invoices/new") {
+            parameter("api_key", api_key)
+            parameter("currency", currency)
+            parameter("source_currency", source_currency)
+            parameter("source_amount", source_amount)
+            parameter("allowed_psys_cids", allowed_psys_cids)
+            parameter("order_name", order_name)
+            parameter("order_number", order_number)
+            parameter("expire_min", expire_min)
+        }.map(NewInvoiceResponse::data)
     }
 
     internal suspend fun setUserEmail(
