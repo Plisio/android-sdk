@@ -11,7 +11,7 @@ import net.plisio.sdk.models.PlisioInvoiceID
  */
 object PlisioClient {
     /** Default Plisio API base URL */
-    const val DefaultBaseURL = "https://plisio.net/api/v1"
+    const val DefaultBaseURL = "https://api.plisio.net/api/v1"
 
     /**
      * Changes Plisio API client configuration
