@@ -8,7 +8,12 @@ plugins {
 
 android {
     namespace = "net.plisio.sdk.ui.compose"
-    compileSdk = 33
+    compileSdk = 34
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+        }
+    }
     defaultConfig {
         minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -72,3 +77,4 @@ publishing {
         }
     }
 }
+

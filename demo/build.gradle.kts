@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "net.plisio.sdk.demo"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         applicationId = "net.plisio.sdk.demo"
         versionCode = 1
         versionName = project.version.toString()

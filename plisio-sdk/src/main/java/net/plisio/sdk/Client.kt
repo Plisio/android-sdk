@@ -1,6 +1,8 @@
 package net.plisio.sdk
 
 import io.ktor.client.plugins.logging.LogLevel
+import net.plisio.sdk.api.InvoiceData
+import net.plisio.sdk.api.NewInvoiceResponse
 import net.plisio.sdk.api.PlisioAPI
 import net.plisio.sdk.api.PlisioInvoiceDetails
 import net.plisio.sdk.models.PlisioCryptoCurrencyID
@@ -41,6 +43,21 @@ object PlisioClient {
      * @param viewKey The key returned after creating the invoice by `/api/v1/invoices/new`
      */
     suspend fun getInvoice(id: PlisioInvoiceID, viewKey: String): Result<PlisioInvoiceDetails> = api.getInvoice(id, viewKey)
+
+    /**
+     * Gets new invoice and details
+     */
+    suspend fun getNewInvoice(
+        api_key: String,
+        currency: String,
+        source_currency: String,
+        source_amount: String,
+        allowed_psys_cids: String,
+        order_name: String,
+        order_number: String,
+        expire_min: String
+    ): Result<InvoiceData> =
+        api.createNewInvoice(api_key, currency, source_currency, source_amount, allowed_psys_cids, order_name, order_number, expire_min)
 
     /**
      * Sets user's e-mail address for invoice
